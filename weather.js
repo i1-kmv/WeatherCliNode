@@ -1,11 +1,16 @@
 #!/ust/bin/env node
 import { getArgs } from './helpers/args.js';
 import { printHelp, printError, printSuccess } from "./services/log.service.js";
-import { saveKeyValue } from "./services/storage.service.js";
+import {saveKeyValue, TOKEN_DICTIONARY} from "./services/storage.service.js";
+import {getWeather} from "./services/api.servie.js";
 
 const saveToken = async (token) => {
+    if (!token.length) {
+        printError("Token is empty");
+        return;
+    }
     try {
-        await saveKeyValue("token", token);
+        await saveKeyValue(TOKEN_DICTIONARY.token, token);
         printSuccess("Token was saved");
     } catch (e) {
         printError(e.message);
@@ -24,6 +29,7 @@ const initCli = () => {
    if (args?.t) {
       return saveToken(args?.t)
    }
+   getWeather("moscow")
    // show weather
 }
 
