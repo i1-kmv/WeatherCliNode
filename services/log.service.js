@@ -17,8 +17,14 @@ const printHelp = () => {
          -h - вывод помощи
          -t - получение токена`)
     );
+};
+
+const printWeather = (res, icon) => {
+    console.log(
+       dedent( `${chalk.bgCyan(`Weather in ${res.name}`)}\n${icon} ${res.weather[0].description}\nTemperature: ${res.main.temp}°C` )
+    );
 }
 
-export { printError, printSuccess, printHelp };
+export { printError, printSuccess, printHelp, printWeather };
 
 
