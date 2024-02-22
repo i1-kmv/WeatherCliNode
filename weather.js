@@ -17,6 +17,21 @@ const saveToken = async (token) => {
     }
 }
 
+const getForcast = async() => {
+    try {
+        const weather = await getWeather("mosco");
+        console.log(weather);
+    } catch (e) {
+        if (e?.response?.status === 404) {
+            printError("City not found");
+        } else if (e?.response?.status === 401) {
+            printError("Authorization error");
+        } else {
+            printError(e.message);
+        }
+    }
+}
+
 const initCli = () => {
    const args = getArgs(process.argv);
    console.log(args);
@@ -29,8 +44,7 @@ const initCli = () => {
    if (args?.t) {
       return saveToken(args?.t)
    }
-   getWeather("moscow")
-   // show weather
+    getForcast();
 }
 
 initCli();
